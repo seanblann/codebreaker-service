@@ -11,4 +11,4 @@ spring:
             create-source: metadata
             scripts:
               action: create
-              ceate-target: dd.sql
+              create-target: ddl.sql
