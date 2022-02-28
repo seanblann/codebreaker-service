@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: service
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          client-id: client_id=509201816933-t2jv179mfu3581mg19ic55br9qr25gdg.apps.googleusercontent.com
+
+
+server:
+  port: 8081
+  serlet:
+    context-path: /codebreaker-community
+  error:
+    include-message: always
+  forward-headers-strategy: native
