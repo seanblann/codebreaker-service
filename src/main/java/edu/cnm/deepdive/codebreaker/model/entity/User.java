@@ -78,6 +78,7 @@ public class User {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
       cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("created DESC")
+  @JsonIgnore
   private final List<Game> games = new LinkedList<>();
 
   @NonNull
@@ -95,20 +96,43 @@ public class User {
     return created;
   }
 
+  @NonNull
+  public String getOauthKey() {
+    return oauthKey;
+  }
+
   public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
+  }
+
+  @NonNull
+  public Date getConnected() {
+    return connected;
   }
 
   public void setConnected(@NonNull Date connected) {
     this.connected = connected;
   }
 
+  @NonNull
+  public String getDisplayName() {
+    return displayName;
+  }
+
   public void setDisplayName(@NonNull String displayName) {
     this.displayName = displayName;
   }
 
+  public String getAvatar() {
+    return avatar;
+  }
+
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  public boolean isIncognito() {
+    return incognito;
   }
 
   public void setIncognito(boolean incognito) {
