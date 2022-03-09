@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
@@ -63,6 +64,7 @@ public class Game {
   @NonNull
   @Column(nullable = false, updatable = false, length = MAX_POOL_SIZE)
   @NotNull
+  @NotBlank
   @Size(min = MIN_POOL_SIZE, max = MAX_POOL_SIZE)
   private String pool;
 
@@ -90,6 +92,7 @@ public class Game {
   @OneToMany(mappedBy = "game", fetch = FetchType.EAGER,
       cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("created ASC")
+  @JsonIgnore
   private final List<Guess> guesses = new LinkedList<>();
 
   @NonNull
@@ -174,22 +177,4 @@ public class Game {
         .count();
   }
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

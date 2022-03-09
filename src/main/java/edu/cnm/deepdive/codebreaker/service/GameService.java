@@ -3,6 +3,7 @@ package edu.cnm.deepdive.codebreaker.service;
 import edu.cnm.deepdive.codebreaker.model.dao.GameRepository;
 import edu.cnm.deepdive.codebreaker.model.entity.Game;
 import edu.cnm.deepdive.codebreaker.model.entity.User;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -32,11 +33,10 @@ public class GameService implements AbstractGameService {
   }
 
   @Override
-  public Game get(UUID externalKey, User user) {
+  public Optional<Game> get(UUID externalKey, User user) {
     return repository
         .findByExternalKey(externalKey)
-        .map((game) -> (game.getUser().getId().equals(user.getId())) ? game : null)
-        .orElseThrow();
+        .map((game) -> game.getUser().getId().equals(user.getId()) ? game : null);
   }
 
   private int[] codePoints(String input) {
@@ -49,7 +49,7 @@ public class GameService implements AbstractGameService {
   private void validate(int[] codePoints) {
     for (int codePoint : codePoints) {
       if (!Character.isDefined(codePoint) || !Character.isValidCodePoint(codePoint)
-      || Character.isISOControl(codePoint) || Character.isWhitespace(codePoint)) {
+          || Character.isISOControl(codePoint) || Character.isWhitespace(codePoint)) {
         throw new IllegalArgumentException();
       }
     }
@@ -62,10 +62,5 @@ public class GameService implements AbstractGameService {
         .map((position) -> codePoints[position])
         .toArray();
     return new String(selection, 0, selection.length);
-
-//    int[] selection = new int[length];
-//    for (int i = 0; i < length; i++) {
-//      selection[i] = codePoints[rng.nextInt(codePoints.length)];
- //    return String.valueOf(new String(selection, 0, selection.length));
   }
 }
